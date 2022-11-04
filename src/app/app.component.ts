@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
     title = 'angular-eslint-prettier-husky-base';
-  somevariable = "hello";
+  somevariable = 'hello';
 }
