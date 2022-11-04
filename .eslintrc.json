@@ -1,41 +1,50 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "parser": "@typescript-eslint/parser",
-  "extends": [
-    "eslint:recommended",
-    "standard-with-typescript",
-    "prettier"
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
   ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ]
+      }
     },
-    "ecmaVersion": "latest",
-    "sourceType": "module",
-    "project": ["tsconfig.json"],
-    "extraFileExtensions": ["html"]
-  },
-  "plugins": [
-    "eslint-plugin-html",
-    "prettier"
-  ],
-  "rules": {
-    "prettier/prettier": ["error"],
-    "indent": [
-      "warn",
-      "tab"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
-    "@typescript-eslint/explicit-module-boundary-types": "error"
-  }
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
 }
