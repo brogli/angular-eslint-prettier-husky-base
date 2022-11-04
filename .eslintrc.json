@@ -1,0 +1,40 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "standard-with-typescript",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": ["tsconfig.json"],
+    "extraFileExtensions": ["html"]
+  },
+  "plugins": [
+    "eslint-plugin-html",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": ["error"],
+    "indent": [
+      "warn",
+      "tab"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ]
+  }
+}
