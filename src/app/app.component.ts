@@ -7,13 +7,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
     title = 'angular-eslint-prettier-husky-base';
-    somevariable = 'hello';
+    somevariable: any;
+
+    x = 1;
 
     public someVoidMethod(): void {
         console.log('somestring');
     }
 
-    public getSomeString() {
+    public getSomeString(): string {
         return 'someotherstring';
     }
 }
