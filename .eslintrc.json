@@ -21,7 +21,7 @@
                 "plugin:@angular-eslint/recommended",
                 "plugin:@angular-eslint/template/process-inline-templates",
                 "plugin:@typescript-eslint/recommended-requiring-type-checking",
-                "prettier"
+                "plugin:prettier/recommended"
             ],
             "rules": {
                 "prettier/prettier": [
