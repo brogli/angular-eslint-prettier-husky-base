@@ -1,27 +1,99 @@
-# AngularEslintPrettierHuskyBase
+# Angular Eslint Prettier Husky Base
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8.
+I wanted to create a minimal working angular project with eslint, prettier and husky, so I learn how to set them up
+properly and
+for future reference.
 
-## Development server
+## Steps needed to create an angular-eslint-prettier-husky project
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Prep
 
-## Code scaffolding
+- create new angular project with `ng new some-appname` (
+  prerequisites: https://angular.io/guide/setup-local#install-the-angular-cli)
+- create file in project root: `touch .prettierrc`
+- create file in project root: `touch .eslintignore`
+- execute `ng add @angular-eslint/schematics`, it will create an .eslintrc.json file with some basic config
+- execute `npm install eslint-plugin-prettier@latest`, it runs prettier as an eslint rule
+- execute `npm install eslint-config-prettier`, it handles conflicts between eslint and prettier
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### eslintrc.json config
 
-## Build
+- append `"plugin:prettier/recommended"` to "overrides"."extends" in the eslintrc.json, it needs to be the last item
+- append `"plugins": ["prettier"]` to the root level of .eslitrc.json
+- append `"prettier/prettier": "error"` to "overrides"."rules" in eslintrc.json
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### .prettierrc and .eslintignore config
 
-## Running unit tests
+- put some config into the .prettierrc file (up to you):
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```json
+{
+    "trailingComma": "es5",
+    "printWidth": 80,
+    "singleQuote": true,
+    "useTabs": false,
+    "tabWidth": 4,
+    "semi": true,
+    "bracketSpacing": true
+}
+```
 
-## Running end-to-end tests
+- ignore some stuff (up to you) in the .eslintignore file:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
+package.json
+package-lock.json
+e2e/**
+karma.conf.js
+commitlint.config.js
 
-## Further help
+# /node_modules/* in the project root is ignored by default
+/node_modules/*
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# build artefacts
+dist/*
+build/*
+coverage/*
+```
+
+### package.json config
+
+- append/adapt this in the package.json at the end of "scripts":
+
+```
+"lint": "npx eslint \"src/**/*.{js,jsx,ts,tsx,html}\" --quiet --fix",
+"format": "npx prettier \"src/**/*.{js,jsx,ts,tsx,html,css,scss}\" --write"
+```
+
+### Add husky
+
+- initialize and install husky: `npx husky-init && npm install`, creates a .husky folder in the root folder
+- in .husky/pre-commit replace 'npm run test' with:
+
+```
+npm run format
+npm run lint
+```
+
+Before a commit, this will execute the script statements we put into the package.json.
+
+That's it, try formatting a .ts file weird and make a commit. Prettier will clean it up.
+Now add linting rules to your gusto into the .eslintrc.json file and formatting rules into the .prettierrc file.
+
+## Intellij integration
+
+- Make Intellij use the eslint rules: In the settings search for 'eslint' or go to Language & Frameworks > JavaScript >
+  Code Quality Tools > Eslint, and make sure it picks up your .eslintrc.json.
+- Make Intellij run prettier and eslint --fix upon save: In the settings search for 'Actions on Save' or go to Tools >
+  Actions on Save and tick "Run eslint --fix" and "Run Prettier". Make sure it's able to pick up the correct package
+  from the node_module folder.
+
+## References
+
+- https://gist.github.com/santoshshinde2012/e1433327e5f7a58f98fe3e6651c4d5de
+- https://www.coffeeclass.io/articles/commit-better-code-with-husky-prettier-eslint-lint-staged#Configuring%20Husky
+- https://itnext.io/angular-with-eslint-prettier-husky-6581ecd66fbb
+
+## Contributions?
+
+Sure, feel free to make a pr.
