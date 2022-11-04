@@ -1,6 +1,13 @@
 package.json
 package-lock.json
-dist
 e2e/**
 karma.conf.js
 commitlint.config.js
+
+# /node_modules/* in the project root is ignored by default
+/node_modules/*
+
+# build artefacts
+dist/*
+build/*
+coverage/*
